@@ -47,6 +47,8 @@ export default {
           /(<!-- open-pb:(.*?) -->(.*?)<!-- close-pb:(.*?) -->)/
         );
         componentJsonData.content = componentContent[3];
+        // attach original string to data
+        componentJsonData.originalString = string;
 
         contentComponents.push(componentJsonData);
       });
@@ -57,9 +59,10 @@ export default {
   methods: {
     updateContentComponent(newValue, dataSet) {
       let componentData = JSON.parse(dataSet.component);
-      // get content before altering object
-      let componentContent = componentData.content;
+      let componentContent = newValue;
+      let originalComponentString = componentData.originalString;
       // remove content from object
+      delete componentData.originalString;
       delete componentData.content;
       // created escaped data string
       let componentDataString = JSON.stringify(componentData);
@@ -80,10 +83,10 @@ export default {
           ".*) -->(.*?)<!-- close-pb:(.*?) -->"
       );
       this.pageData.content = this.pageData.content.replace(
-        regex,
+        // regex,
+        originalComponentString,
         newComponentContentString
       );
-      console.log(newComponentContentString);
     }
   }
 };

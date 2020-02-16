@@ -56,19 +56,34 @@ export default {
   },
   methods: {
     updateContentComponent(newValue, dataSet) {
-        let componentData = JSON.parse(dataSet.component);
-        // get content before altering object
-        let componentContent = componentData.content;
-        // remove content from object
-        delete componentData.content;
-        // created escaped data string
-        let componentDataString = JSON.stringify(componentData);
-        componentDataString = componentDataString.replace(/"/g,'\"');
-        let newComponentContentString = `<!-- open-pb:${componentDataString} -->${componentContent}<!-- close-pb:${componentData.component} -->`
-        // find and replace component string with regex
-        let regex = new RegExp('<!-- open-pb:(.*"id":' + componentData.id + '.*) -->(.*?)<!-- close-pb:(.*?) -->');
-        this.pageData.content = this.pageData.content.replace(regex, newComponentContentString);
-        // console.log()
+      let componentData = JSON.parse(dataSet.component);
+      // get content before altering object
+      let componentContent = componentData.content;
+      // remove content from object
+      delete componentData.content;
+      // created escaped data string
+      let componentDataString = JSON.stringify(componentData);
+      componentDataString = componentDataString.replace(/"/g, '"');
+      let newComponentContentString =
+        "<!-- open-pb:" +
+        componentDataString +
+        " -->" +
+        componentContent +
+        "<!-- close-pb:" +
+        componentData.component +
+        " -->";
+      // find and replace component string with regex
+      // TODO: improve reliability of this as likely only to work once, as stringifying process removes spaces
+      let regex = new RegExp(
+        '<!-- open-pb:(.*"id": ' +
+          componentData.id +
+          ".*) -->(.*?)<!-- close-pb:(.*?) -->"
+      );
+      this.pageData.content = this.pageData.content.replace(
+        regex,
+        newComponentContentString
+      );
+      console.log(newComponentContentString);
     }
   }
 };

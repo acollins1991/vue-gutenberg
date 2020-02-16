@@ -75,13 +75,7 @@ export default {
         "<!-- close-pb:" +
         componentData.component +
         " -->";
-      // find and replace component string with regex
-      // TODO: improve reliability of this as likely only to work once, as stringifying process removes spaces
-      let regex = new RegExp(
-        '<!-- open-pb:(.*"id": ' +
-          componentData.id +
-          ".*) -->(.*?)<!-- close-pb:(.*?) -->"
-      );
+      // find and replace component string
       this.pageData.content = this.pageData.content.replace(
         // regex,
         originalComponentString,

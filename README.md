@@ -1,5 +1,7 @@
 # vue-page-builder
 
+Demo: https://acollins1991.github.io/vue-gutenberg/
+
 ## Project setup
 ```
 npm install
